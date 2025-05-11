@@ -4,7 +4,7 @@ import verifyUser from "../middleware/verifyUser";
 
 const router = express.Router();
 
-router.post("/add-todo", verifyUser, async (req: Request, res: Response) => {
+router.post("/", verifyUser, async (req: Request, res: Response) => {
 
   const newTodo = new Todo({
     userId: req.user.id,
@@ -20,7 +20,7 @@ router.post("/add-todo", verifyUser, async (req: Request, res: Response) => {
   }
 });
 
-router.get("/get-todos", verifyUser, async (req: Request, res: Response) => {
+router.get("/", verifyUser, async (req: Request, res: Response) => {
   try {
 
     const todos = await Todo.find({ userId: req.user.id });
@@ -34,7 +34,7 @@ router.get("/get-todos", verifyUser, async (req: Request, res: Response) => {
 });
 
 
-router.delete("/delete-todo/:todoId", verifyUser, async (req: Request, res: Response) => {
+router.delete("/:todoId", verifyUser, async (req: Request, res: Response) => {
   try {
 
     const todo = await Todo.findById(req.params.todoId);
@@ -57,8 +57,7 @@ router.delete("/delete-todo/:todoId", verifyUser, async (req: Request, res: Resp
   }
 });
 
-
-router.put("/update-todo/:todoId", verifyUser, async (req: Request, res: Response) => {
+router.put("/:todoId", verifyUser, async (req: Request, res: Response) => {
   try {
     const todo = await Todo.findById(req.params.todoId);
 

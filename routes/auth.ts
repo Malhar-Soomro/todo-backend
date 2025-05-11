@@ -32,11 +32,14 @@ router.post("/register", async (req: Request, res: Response) => {
 
 // login
 router.post("/login", async (req: Request, res: Response) => {
+
+  console.log(req.body);
+
   try {
     const user = await User.findOne({email: req.body.email});
 
     if (!user) {
-       res.status(401).json("Wrong Credentials");
+       res.status(401).json("user not found");
        return;
     }
 

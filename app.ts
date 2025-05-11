@@ -21,7 +21,7 @@ app.use(express.json());
 
 //routes 
 app.use("/api/auth", authRoute);
-app.use("/api/todo", todoRoute);
+app.use("/api/todos", todoRoute);
 
 app.get("/", (req, res) => {
     res.status(200).json("api is working");
