@@ -60,10 +60,10 @@ router.delete("/delete-todo/:todoId", verifyUser, async (req: Request, res: Resp
 
 router.put("/update-todo/:todoId", verifyUser, async (req: Request, res: Response) => {
   try {
-    const todo = await Todo.findById(req.params.id);
+    const todo = await Todo.findById(req.params.todoId);
 
     if (!todo) {
-      res.status(404).json({ message: "Todo no found" });
+      res.status(404).json({ message: "Todo not found" });
       return;
     }
 
