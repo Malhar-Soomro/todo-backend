@@ -1,8 +1,14 @@
-import {Request, Response} from "express";
-import bcrypt from "bcrypt";
-
-const router = require("express").Router();
+import express, { Request, Response } from "express";
 import User from "../models/User";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const router = express.Router();
+
+// Generate Token
+const generateToken = (id: string) => {
+  return jwt.sign({ id }, process.env.JWT_SEC || "secret", { expiresIn: "1d" });
+};
 
 // register
 router.post("/register", async (req: Request, res: Response) => {
@@ -30,22 +36,29 @@ router.post("/login", async (req: Request, res: Response) => {
     const user = await User.findOne({email: req.body.email});
 
     if (!user) {
-      return res.status(401).json("Wrong Credentials");
+       res.status(401).json("Wrong Credentials");
+       return;
     }
 
     // compare the passwords
     const isMatch = await bcrypt.compare(req.body.password, user.password);
 
     if (!isMatch) {
-       return res.status(401).json("Wrong Credentials");
+        res.status(401).json("Wrong Credentials");
+        return;
     }
 
+    // generate token
+    const token = generateToken(user._id.toString());
+
     const { password, ...others } = user.toObject();
-    return res.status(200).json({ ...others });
+    res.status(200).json({ ...others, token });
+    return; 
     
   } catch (error) {
     console.log("error ->", error);
-    return res.status(500).json(error);
+    res.status(500).json(error);
+    return;
   }
 });
 
