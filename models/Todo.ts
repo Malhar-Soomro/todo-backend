@@ -5,6 +5,7 @@ interface ITodo {
     userId:string,
     title:string,
     description:string,
+    completed: boolean;
 }
 
 const todoSchema = new mongoose.Schema<ITodo>({
@@ -20,6 +21,10 @@ const todoSchema = new mongoose.Schema<ITodo>({
         type:String,
         required:true
     },
+    completed:{
+        type:Boolean,
+        default:false,
+    }
 });
 
 export default mongoose.model<ITodo>("todos", todoSchema);

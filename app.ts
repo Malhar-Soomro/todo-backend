@@ -24,7 +24,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/todos", todoRoute);
 
 app.get("/", (req, res) => {
-    res.status(200).json("api is working");
+    res.status(200).json({message:"api is working"});
 });
 
 app.listen(PORT, () => {
