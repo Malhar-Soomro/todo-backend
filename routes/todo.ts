@@ -9,6 +9,7 @@ router.post("/", verifyUser, async (req: Request, res: Response) => {
     userId: req.user.id,
     title: req.body.title,
     description: req.body.description,
+    tag: req.body.tag
   });
 
   try {

@@ -5,6 +5,7 @@ interface ITodo {
     userId:string,
     title:string,
     description:string,
+    tag:string,
     completed: boolean;
 }
 
@@ -18,6 +19,10 @@ const todoSchema = new mongoose.Schema<ITodo>({
         required:true,
     },
     description:{
+        type:String,
+        required:true
+    },
+    tag:{
         type:String,
         required:true
     },
